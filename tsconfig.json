@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+
+    "target": "ES2018",                                  
+    "lib": ["ES2018"],                                     
+    "module": "commonjs",                               
+    "moduleResolution": "node", 
+    "typeRoots": ["./src/@types"],            //representa a patas de tipos personalizada que temos dentro do projeto         
+    "resolveJsonModule": true,                    
+   "allowJs": true,                                
+     "outDir": "./dist",                                       // informa qual a pasta que vai ser gerada o novo arquivo javascript quando for transpilar o codigo type para javascript
+     "esModuleInterop": true,                             
+    "strict": true,                                      
+  },
+  "include": ["src/**/*"],                                       // tudo que tiver dentro da pasta src o typescript irá incluir como um projeto typescript
+  "exclude": ["node_modules", "dist"]                                   // pasta que o typescript não vai olhar
+}
