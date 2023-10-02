@@ -13,5 +13,5 @@
     "strict": true,                                      
   },
   "include": ["src/**/*"],                                       // tudo que tiver dentro da pasta src o typescript irá incluir como um projeto typescript
-  "exclude": ["node_modules", "dist"]                                   // pasta que o typescript não vai olhar
+  "exclude": ["node_modules", "dist"]                                   // pasta que o typescript não vai olharr
 }
