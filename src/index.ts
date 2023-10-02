@@ -4,8 +4,8 @@ import express from 'express'
 const app = express()
 
 app.use(express.json())
+console.console.log();
 
 
-app.listen(3000 , () =>{
-    console.log('servidor inicializado na porta 3000')
-})
+
+app.listen(3000 )
