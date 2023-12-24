@@ -2,7 +2,7 @@ import { knex } from '../bancodedados/conexao'
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { Request, Response } from 'express'
-import { TipoUsuario } from '../TipoUsuario'
+import { TipoUsuario } from '../tipos'
 
 
 
@@ -19,15 +19,15 @@ export const cadastrarUsuario = async (req: Request, res: Response) => {
         const senhaCriptografada = await bcrypt.hash(senha, 10)
 
 
-        const usuario = await knex<TipoUsuario>('usuarios').insert({ nome, email, senha: senhaCriptografada }).returning('*').first()
+        const usuario = await knex<TipoUsuario>('usuarios').insert({ nome, email, senha: senhaCriptografada }).returning('*')
 
+        const {senha:_, ...usuariologado} = usuario[0]
 
-        return res.status(200).json(usuario)
-
-
+        return res.status(200).json(usuariologado)
 
     } catch (error) {
         return res.status(500).json({ mensagem: 'Erro interno do servidor ' })
+
     }
 
 }
