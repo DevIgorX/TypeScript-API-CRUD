@@ -7,7 +7,7 @@ export const listarCarros = async (req: Request, res: Response) => {
 
     try {
 
-        const carros = await knex<Carro>('carros')
+        const carros = await knex<Carro>('carros') //<Carro> Indica o tipo de dados que se espera obter do banco de dados. ('carros') especifica a tabela do banco de dados que será consultada.
         return res.json(carros)
 
     } catch {
