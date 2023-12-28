@@ -10,7 +10,7 @@
    "allowJs": true,                                
      "outDir": "./dist",                                       // informa qual a pasta que vai ser gerada o novo arquivo javascript quando for transpilar o codigo type para javascript
      "esModuleInterop": true,                             
-    "strict": true,                                      
+    "strict": false,                                      
   },
   "include": ["src/**/*"],                                       // tudo que tiver dentro da pasta src o typescript irá incluir como um projeto typescript
   "exclude": ["node_modules", "dist"]                                   // pasta que o typescript não vai olharr

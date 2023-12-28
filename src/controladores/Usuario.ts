@@ -21,7 +21,7 @@ export const cadastrarUsuario = async (req: Request, res: Response) => {
 
         const usuario = await knex<TipoUsuario>('usuarios').insert({ nome, email, senha: senhaCriptografada }).returning('*')
 
-        const {senha:_, ...usuariologado} = usuario[0]
+        const { senha: _, ...usuariologado } = usuario[0]
 
         return res.status(200).json(usuariologado)
 
@@ -29,6 +29,40 @@ export const cadastrarUsuario = async (req: Request, res: Response) => {
         return res.status(500).json({ mensagem: 'Erro interno do servidor ' })
 
     }
+
+}
+
+export const login = async (req: Request, res: Response) => {
+
+    const { email, senha } = req.body
+
+
+    try {
+
+        const usuario = await knex<TipoUsuario>('usuarios').where({ email }).first()
+
+        if (!usuario) {
+            return res.status(404).json({ mensagem: 'E-mail ou Senha invalido' })
+        }
+
+        const verificarSenha = await bcrypt.compare(senha, usuario.senha)
+
+        if(!verificarSenha){
+            return res.status(404).json({ mensagem: 'E-mail ou Senha invalido' })
+        }
+
+
+        const token = jwt.sign({id: usuario.id}, '1234', {expiresIn: '8h'} )
+
+        const {senha:_,...usuariologado} = usuario
+
+        return res.json({usuario: usuariologado , token})
+
+    } catch (error) {
+        console.log(error.message)
+        return res.status(500).json({mensagem: 'Erro interno do Servidor'})
+    }
+
 
 }
 

@@ -1,6 +1,6 @@
 import { Router } from "express";
 import{ atualizarCarros, cadastrarCarros, detalharCarros, exlcuirCarros, listarCarros } from   './controladores/carros'
-import { cadastrarUsuario } from "./controladores/Usuario";
+import { cadastrarUsuario, login } from "./controladores/Usuario";
 
 const rotas = Router()
 
@@ -13,6 +13,8 @@ rotas.delete('/carros/:id',exlcuirCarros)
 
 
 rotas.post('/usuario', cadastrarUsuario)
+rotas.post('/usuario/login',login)
+
 
 
 export default rotas
