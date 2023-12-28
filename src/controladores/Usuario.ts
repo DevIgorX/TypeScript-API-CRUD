@@ -47,22 +47,22 @@ export const login = async (req: Request, res: Response) => {
 
         const verificarSenha = await bcrypt.compare(senha, usuario.senha)
 
-        if(!verificarSenha){
+        if (!verificarSenha) {
             return res.status(404).json({ mensagem: 'E-mail ou Senha invalido' })
         }
 
 
-        const token = jwt.sign({id: usuario.id}, '1234', {expiresIn: '8h'} )
+        const token = jwt.sign({ id: usuario.id }, '1234', { expiresIn: '8h' })
 
-        const {senha:_,...usuariologado} = usuario
+        const { senha: _, ...usuariologado } = usuario
 
-        return res.json({usuario: usuariologado , token})
+        return res.json({ usuario: usuariologado, token })
 
     } catch (error) {
-        console.log(error.message)
-        return res.status(500).json({mensagem: 'Erro interno do Servidor'})
+        return res.status(500).json({ mensagem: 'Erro interno do Servidor' })
     }
 
 
 }
+
 
