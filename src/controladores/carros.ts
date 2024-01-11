@@ -38,6 +38,10 @@ export const detalharCarros = async (req: Request, res: Response) => {
 export const cadastrarCarros = async (req: Request, res: Response) => {
     const { marca, modelo, cor, ano, valor } = req.body
 
+    if(!marca || !modelo || !cor || !ano || !valor){
+        return res.status(404).json({mensagem: 'todos os campos devem ser informados!'})
+    }
+
     try {
 
         const carro = await knex<Omit<Carro, 'id'>>('carros').insert({ marca, modelo, cor, ano, valor }).returning('*')
