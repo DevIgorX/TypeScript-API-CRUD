@@ -68,9 +68,10 @@ export const atualizarCarros = async (req: Request, res: Response) => {
             return res.status(404).json({ mensagem: 'Carro não encontrado' })
         }
 
-        await knex<Carro>('carros').where({ id: Number(id) }).update({ marca, modelo, cor, ano, valor })
+        const carroAtualizado = await knex<Carro>('carros').where({ id: Number(id) }).update({ marca, modelo, cor, ano, valor }).returning('*')
 
-        return res.status(204).send()
+
+        return res.status(204).json({mensagem: 'Carro Atualizado com sucesso!', carro: carroAtualizado[0]})
 
     } catch {
         return res.status(500).json({ mensagem: 'Erro interno do Servidor.' })
@@ -92,7 +93,7 @@ export const exlcuirCarros = async (req: Request, res: Response) => {
 
         await knex<Carro>('carros').where({ id: Number(id) }).del()
 
-        return res.status(204).send()
+        return res.status(204).json({mensagem: 'Carro excluído com Sucesso!'})
 
     } catch {
         return res.status(500).json({ mensagem: 'Erro interno do Servidor.' })
