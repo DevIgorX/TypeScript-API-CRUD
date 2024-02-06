@@ -2,6 +2,8 @@ import jwt from 'jsonwebtoken'
 import  {knex} from '../bancodedados/conexao'
 import {Request , Response} from  'express'
 import {TipoUsuario} from  '../tipos'
+import dotenv from 'dotenv'
+dotenv.config()
 
 interface tokenPayload {
     id: number
@@ -20,7 +22,7 @@ export const verificarUsuariologado = async (req: Request , res: Response, next)
 
     try {
         
-        const {id} = jwt.verify(token,'1234') as tokenPayload
+        const {id} = jwt.verify(token,process.env.SenhaJWT) as tokenPayload
         
 
         const usuariolog = await knex<TipoUsuario>('usuarios').where({id}).first()

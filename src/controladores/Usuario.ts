@@ -3,12 +3,16 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { Request, Response } from 'express'
 import { TipoUsuario } from '../tipos'
+import dotenv from 'dotenv'
+dotenv.config()
+
 
 
 
 export const cadastrarUsuario = async (req: Request, res: Response) => {
 
     const { nome, email, senha } = req.body
+
 
     try {
 
@@ -36,6 +40,10 @@ export const login = async (req: Request, res: Response) => {
 
     const { email, senha } = req.body
 
+    if(!email || !senha){
+        return res.status(404).json({mensagem: 'Todos os campos são obrigatórios '})
+    }
+
 
     try {
 
@@ -52,7 +60,7 @@ export const login = async (req: Request, res: Response) => {
         }
 
 
-        const token = jwt.sign({ id: usuario.id }, '1234', { expiresIn: '8h' })
+        const token = jwt.sign({ id: usuario.id }, process.env.SenhaJWT, { expiresIn: '8h' })
 
         const { senha: _, ...usuariologado } = usuario
 
