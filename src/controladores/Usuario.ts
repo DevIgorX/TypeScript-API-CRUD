@@ -74,3 +74,29 @@ export const login = async (req: Request, res: Response) => {
 }
 
 
+export const excluirUsuario = async (req: Request , res: Response) =>{
+
+    const {id} = req.params
+
+    try {
+
+        const usuarioexistente = await knex<TipoUsuario>('usuarios').where({id: Number(id)}).first()
+
+        if(!usuarioexistente){
+            return res.status(404).json({mensagem: 'Usuario não encontrado'})
+        }
+
+        const usuariodeletado = await knex<TipoUsuario>('usuarios').where({id: Number(id)}).del().returning('*')
+
+        const {senha: _, ...usuario} = usuariodeletado[0]
+
+        return res.status(201).json({mensagem:'Usuario deletado com sucesso!', Usuario: usuario})
+        
+    } catch (error) {
+        return res.status(500).json({mensagem: `Erro interno do Servidor: ${error.message}`})
+    }
+
+
+}
+
+
